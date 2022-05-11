@@ -1,0 +1,46 @@
+OUTPUT_DIR: "assets/test/time"
+OUTPUT_TAG: "Time_S4G"
+DATA:
+  NUM_WORKERS: 1
+  SCORE_CLASSES: 3
+  TRAIN:
+    ROOT_DIR: "/data2/zbl/dataset/0.08"
+  VAL:
+    ROOT_DIR: "/data2/zbl/dataset/0.08"
+  TEST:
+    ROOT_DIR: "/data2/zbl/dataset/0.08"
+MODEL:
+  TYPE: "PN2_CLS"
+  PN2:
+    RADIUS: (0.02, 0.08, 0.32)
+    NUM_INPUT: 25600
+    NUM_CENTROIDS: (5120, 1024, 256)
+    NUM_NEIGHBOURS: (64, 64, 64)
+    SA_CHANNELS: ((128, 128, 256), (256, 256, 512), (512, 512, 1024))
+    FP_CHANNELS: ((1024, 1024), (512, 512), (256, 256, 256))
+    NUM_FP_NEIGHBOURS: (3, 3, 3)
+    LABEL_SMOOTHING: 0.0
+    NEG_WEIGHT: 0.5
+    SEG_CHANNELS: (512, 256, 256, 128)
+  MODEL_PATH: "assets/train/train_models/S4G_train/S4G/25.model" #"contrast/assets/models/S4G_train1/model_best.model" #"contrast/assets/models/S4G/25.model"
+SOLVER:
+  BASE_LR: 0.005 #0.001
+SCHEDULER:
+  MAX_EPOCH: 31
+  TYPE: "StepLR"
+  StepLR:
+    step_size: 5
+    gamma: 0.5
+  GPU: 6
+  GPU_NUM: 2
+  GPUS: 6,7
+TRAIN:
+  BATCH_SIZE: 6
+  LOG_PERIOD: 5
+  FILE_LOG_PERIOD: 100
+  CHECKPOINT_PERIOD: 5 #10
+TEST:
+  WEIGHT: "assets/train/train_models/S4G_train/S4G_train4/model_best.model"
+  BATCH_SIZE: 1
+  LOG_PERIOD: 5
+  FILE_LOG_PERIOD: 100
